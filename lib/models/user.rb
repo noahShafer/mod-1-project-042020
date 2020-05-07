@@ -20,8 +20,7 @@ class User < ActiveRecord::Base
     end
     
     def fetch_feed
-        tweet_feed = self.followees.map { |user| user.tweets}.flatten
-        tweet_feed.sort_by &:timestamp.reverse
+        self.followees.map { |user| user.tweets}.flatten.concat(self.tweets).sort_by {|tweet| tweet.timestamp}.reverse
     end
 
 end
