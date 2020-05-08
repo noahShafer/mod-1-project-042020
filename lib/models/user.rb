@@ -10,7 +10,18 @@ class User < ActiveRecord::Base
     has_many :tweets
 
     def create_tweet(message)
-        Tweet.create(user_id: self.id, message: message, timestamp: DateTime.now)
+        formatted_msg = ""
+        count = 0
+        message.split("").each {|char|
+            if count >= 47
+                formatted_msg += "#{char}\n"
+                count = 0
+            else
+                formatted_msg += char
+            end
+            count += 1
+        }
+        Tweet.create(user_id: self.id, message: formatted_msg, timestamp: DateTime.now)
     end
 
     def follow(user:)

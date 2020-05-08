@@ -13,7 +13,7 @@ class PromptView
         elsif type == "user"
             str = ""
             str += "-----------------------------------------------\n".colorize(:color => :cyan) if top_line
-            str += "  #{model.display_name}\n".bold 
+            str += AsciiArt.new(model.profile_pic).to_ascii_art(width: 5) + " #{model.display_name}\n".bold 
             str += "  @#{model.username}\n".colorize( :color => :light_black)
             str += "  -----------------------------------------------".colorize(:color => :cyan) 
             str

@@ -18,11 +18,19 @@ class AppDelegate
     end
 
     def set_current_user(user)
-        self.current_user_id = user.id
+        if user != nil 
+            self.current_user_id = user.id
+        else
+            self.current_user_id = nil
+        end
     end
 
     def current_user
-        User.find_by(id: self.current_user_id)
+        if current_user_id == nil
+            nil
+        else
+            User.find_by(id: self.current_user_id)
+        end
     end
 
     def clear_console
@@ -74,8 +82,8 @@ class AppDelegate
         puts "
         __      __   _                    _         _____        _ _   _           _ 
         \\ \\    / /__| |__ ___ _ __  ___  | |_ ___  |_   _|_ __ _(_) |_| |_ ___ _ _| |
-        \\ \\/\\/ / -_) / _/ _ \\ '  \\/ -_) |  _/ _ \\   | | \\ V  V / |  _|  _/ -_) '_|_|
-        \\_/\\_/\\___|_\\__\\___/_|_|_\\___|  \\__\\___/   |_|  \\_/\\_/|_|\\__|\\__\\___|_| (_)
+         \\ \\/\\/ / -_) / _/ _ \\ '  \\/ -_) |  _/ _ \\   | | \\ V  V / |  _|  _/ -_) '_|_|
+          \\_/\\_/\\___|_\\__\\___/_|_|_\\___|  \\__\\___/   |_|  \\_/\\_/|_|\\__|\\__\\___|_| (_)
                                                                                     
         ".cyan.bold    
     end

@@ -54,19 +54,7 @@ class HomeController
             AppDelegate.instance.clear_console
             self.create_tweet_prompt
         else
-            final_msg = ""
-            count = 0
-            message.split("").each {|char|
-                p char
-                if count >= 47
-                    final_msg += "#{char}\n"
-                    count = 0
-                else
-                    final_msg += char
-                end
-                count += 1
-            }
-            AppDelegate.instance.current_user.create_tweet(final_msg)
+            AppDelegate.instance.current_user.create_tweet(message)
             AppDelegate.instance.clear_console
             self.display_feed
         end
