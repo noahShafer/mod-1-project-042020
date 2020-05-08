@@ -10,7 +10,6 @@ class FollowersController
     end
 
     def users_list
-        AppDelegate.ascii_logo
         users = type == "followers" ? AppDelegate.instance.current_user.followers : AppDelegate.instance.current_user.followees
         puts "#{type == "followers" ? "Followers" : "Following"} ".bold.colorize(:cyan)
         choices = []
