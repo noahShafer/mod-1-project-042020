@@ -1,5 +1,6 @@
 require 'tty-prompt'
 require 'singleton'
+require 'colorize'
 class AppDelegate
     include Singleton
     attr_reader :prompt
