@@ -10,9 +10,6 @@ class SearchUserController
     end
 
     def get_search_input
-        AppDelegate.instance.clear_console
-        AppDelegate.ascii_logo
-        puts "                SEARCH USERS".bold.colorize(:cyan)
         search_text = prompt.ask("Search Users: ")
         self.search_and_display_users(search_text)
     end
@@ -40,6 +37,7 @@ class SearchUserController
         if choice.choice_str == 'Back To Home'
             self.go_back_to_home
         elsif choice.choice_str == 'Search For Another User'
+            AppDelegate.instance.clear_console
             self.get_search_input
         elsif choice.choice_str == "user"
             AppDelegate.instance.clear_console

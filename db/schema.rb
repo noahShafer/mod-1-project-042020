@@ -28,6 +28,7 @@ ActiveRecord::Schema.define(version: 20200505194222) do
     t.string "display_name"
     t.string "email"
     t.string "password"
+    t.string "profile_pic"
   end
 
 end
