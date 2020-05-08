@@ -1,3 +1,4 @@
+require './lib/app_delegate.rb'
 class User < ActiveRecord::Base
     has_many :following_users, foreign_key: :followee_id, class_name: 'UserFollower'
     has_many :followers, through: :following_users
@@ -9,19 +10,27 @@ class User < ActiveRecord::Base
         Tweet.create(user_id: self.id, message: message, timestamp: DateTime.now)
     end
 
-    def follow_user(user)
-        UserFollower.create(followee_id: user.id, follower_id: self.id)
+    def follow(user:)
+        self.followees << user
     end
 
-    def unfollow_user(user)
-        UserFollower.find_by(followee_id: user.id, follower_id: self.id).destroy
+    def unfollow(user:)
         self.followees.delete(user)
-        user.followers.delete(self)
     end
     
     def fetch_feed
-        tweet_feed = self.followees.map { |user| user.tweets}.flatten
-        tweet_feed.sort_by &:timestamp.reverse
+        self.followees.map { |user| user.tweets}.flatten.concat(self.tweets).sort_by {|tweet| tweet.timestamp}.reverse
+    end
+
+    def is_following?(user)
+        self.followees.where(id: user.id) != []
+    end
+
+    def self.search_users(search_text)
+        current_user = AppDelegate.instance.current_user
+        # self.where("username LIKE ? OR display_name LIKE ? AND username != ? OR display_name != ?", "%#{search_text}%", "%#{search_text}%", "%noah_shafer%", "%boa_acm%").order('username')
+        self.where("username LIKE ? OR display_name LIKE ?", "%#{search_text}%", "%#{search_text}%").order('username').select {|u| u.username != current_user.username && u.display_name != current_user.display_name}
+
     end
 
 end
