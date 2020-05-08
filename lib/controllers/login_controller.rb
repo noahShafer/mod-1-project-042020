@@ -11,7 +11,7 @@ class LoginController
         AppDelegate.instance.clear_console
         AppDelegate.ascii_banner
         AppDelegate.ascii_logo
-        res = prompt.select("Login Or Create an Account?") do |menu|
+        res = prompt.select("Login Or Create an Account?", active_color: :cyan) do |menu|
             menu.choice 'Create Account'
             menu.choice 'Login'
         end

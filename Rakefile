@@ -11,5 +11,6 @@ namespace :db_tasks do
   task :rdb do 
     Rake::Task['db:drop'].execute
     Rake::Task['db:migrate'].execute
+    Rake::Task['db:seed'].execute
   end
 end

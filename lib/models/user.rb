@@ -13,7 +13,6 @@ class User < ActiveRecord::Base
         formatted_msg = ""
         count = 0
         message.split("").each {|char|
-            p char
             if count >= 47
                 formatted_msg += "#{char}\n"
                 count = 0
