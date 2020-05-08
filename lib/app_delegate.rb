@@ -18,11 +18,19 @@ class AppDelegate
     end
 
     def set_current_user(user)
-        self.current_user_id = user.id
+        if user != nil 
+            self.current_user_id = user.id
+        else
+            self.current_user_id = nil
+        end
     end
 
     def current_user
-        User.find_by(id: self.current_user_id)
+        if current_user_id == nil
+            nil
+        else
+            User.find_by(id: self.current_user_id)
+        end
     end
 
     def clear_console

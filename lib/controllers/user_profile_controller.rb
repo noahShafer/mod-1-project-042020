@@ -42,6 +42,7 @@ class UserProfileController
                 menu.choice 'Followers'
                 menu.choice 'Following'
                 menu.choice 'Change Display Name'
+                menu.choice 'Logout'
             end
     
             if res == 'Back To Home'
@@ -54,6 +55,9 @@ class UserProfileController
                 FollowersController.new(type: "following")
             elsif res == 'Change Display Name'
                 self.change_display_name_prompt
+            elsif res == 'Logout'
+                AppDelegate.instance.set_current_user(nil)
+                AppDelegate.instance.route_app
             end
         elsif self.type == "user"
             choices = []
