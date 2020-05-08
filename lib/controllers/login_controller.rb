@@ -40,7 +40,7 @@ class LoginController
             sleep 3.0
             self.prompt_login_or_create_account
         else
-            puts "Welcome back to Twitter CLI (Route to home)".bold.colorize(:cyan)
+            puts "Welcome back to Twitter CLI...".bold.colorize(:cyan)
             sleep 3.0
             self.finished_login(user)
         end
@@ -65,9 +65,10 @@ class LoginController
             sleep 3.0
             self.prompt_login_or_create_account
         else 
-            puts "Welcome to Twitter #{username} (Route To Home)".bold.colorize(:cyan)
+            puts "Welcome to Twitter #{username}...".bold.colorize(:cyan)
             sleep 3.0
-            user = User.create(username: username, display_name: display_name, email: email, password: password)
+            dog_photo = User.fetch_dog_photo
+            user = User.create(username: username, display_name: display_name, email: email, password: password, profile_pic: dog_photo)
             self.finished_login(user)
         end
     end
