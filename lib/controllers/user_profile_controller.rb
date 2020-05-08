@@ -18,6 +18,7 @@ class UserProfileController
 
     def profile_info
         AppDelegate.ascii_logo
+        puts AsciiArt.new(self.user.profile_pic).to_ascii_art(width: 5)
         puts "#{self.user.display_name} ".bold 
         puts "@#{self.user.username}".colorize( :color => :light_black)
         puts "#{self.user.followees.count} ".bold + "Following  ".colorize(:light_black) + "#{self.user.followers.count} ".bold + "Followers".colorize(:light_black)
@@ -28,7 +29,7 @@ class UserProfileController
         tweets = self.user.tweets
         puts "Tweets".bold.colorize(:cyan)
         tweets.each_with_index { |tweet, index| 
-            puts "#{tweet.user.display_name} ".bold + "@#{tweet.user.username}".colorize( :color => :light_black)
+            puts AsciiArt.new(tweet.user.profile_pic).to_ascii_art(width: 5) + "#{tweet.user.display_name} ".bold + "@#{tweet.user.username}".colorize( :color => :light_black)
             puts "#{tweet.message}"
             puts "-----------------------------------------------".colorize(:color => :cyan) 
         }
