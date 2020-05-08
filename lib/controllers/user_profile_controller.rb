@@ -17,7 +17,7 @@ class UserProfileController
     end
 
     def profile_info
-        puts "-----------------------------------------------".colorize( :color => :cyan)
+        AppDelegate.ascii_logo
         puts "#{self.user.display_name} ".bold 
         puts "@#{self.user.username}".colorize( :color => :light_black)
         puts "#{self.user.followees.count} ".bold + "Following  ".colorize(:light_black) + "#{self.user.followers.count} ".bold + "Followers".colorize(:light_black)

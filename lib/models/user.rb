@@ -1,7 +1,4 @@
 require './lib/app_delegate.rb'
-require 'open-uri'
-require 'net/http'
-require 'json'
 class User < ActiveRecord::Base
     has_many :following_users, foreign_key: :followee_id, class_name: 'UserFollower'
     has_many :followers, through: :following_users
@@ -34,13 +31,6 @@ class User < ActiveRecord::Base
         # self.where("username LIKE ? OR display_name LIKE ? AND username != ? OR display_name != ?", "%#{search_text}%", "%#{search_text}%", "%noah_shafer%", "%boa_acm%").order('username')
         self.where("username LIKE ? OR display_name LIKE ?", "%#{search_text}%", "%#{search_text}%").order('username').select {|u| u.username != current_user.username && u.display_name != current_user.display_name}
 
-    end
-
-    def self.fetch_dog_photo
-        uri = URI.parse("https://dog.ceo/api/breeds/image/random")
-        res = Net::HTTP.get_response(uri)
-        json = JSON.parse(res.body)
-        json["message"]
     end
 
 end

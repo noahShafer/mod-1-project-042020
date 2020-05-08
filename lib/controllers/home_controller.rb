@@ -1,6 +1,5 @@
 require './lib/app_delegate.rb'
 require 'colorize'
-require 'asciiart'
 class HomeController
     attr_reader :prompt
     def initialize
@@ -10,13 +9,13 @@ class HomeController
 
     def display_feed
         AppDelegate.instance.clear_console
-        puts "TWITTER".bold.colorize(:cyan)
+        AppDelegate.ascii_logo
+        puts "                    HOME".bold.colorize(:cyan)
         tweets = self.get_user_tweets
         tweets.each_with_index {|tweet, index| 
-            puts "-----------------------------------------------".colorize( :color => :cyan)
-            puts  AsciiArt.new(tweet.user.profile_pic).to_ascii_art(width: 5) + "#{tweet.user.display_name} ".bold + "@#{tweet.user.username}".colorize( :color => :light_black) + " #{tweet.timestamp.strftime("%m/%d/%y %H:%M %p")}".colorize( :color => :light_black)
+            puts "#{tweet.user.display_name} ".bold + "@#{tweet.user.username}".colorize( :color => :light_black) + " #{tweet.timestamp.strftime("%m/%d/%y %H:%M %p")}".colorize( :color => :light_black)
             puts "#{tweet.message}"
-            puts "-----------------------------------------------".colorize(:color => :cyan)  if index == tweets.count - 1
+            puts "-----------------------------------------------".colorize(:color => :cyan) 
         }
         self.display_navigation_prompts
     end
