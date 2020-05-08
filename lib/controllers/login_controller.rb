@@ -1,5 +1,5 @@
 require './lib/app_delegate.rb'
- require 'colorize'
+require 'colorize'
 class LoginController
     attr_reader :prompt
     def initialize
@@ -65,10 +65,9 @@ class LoginController
             sleep 3.0
             self.prompt_login_or_create_account
         else 
-            puts "Welcome to Twitter #{username} (Route To Home)".bold.cyan
+            puts "Welcome to Twitter #{username} (Route To Home)".bold.colorize(:cyan)
             sleep 3.0
-            dog_photo = User.fetch_dog_photo
-            user = User.create(username: username, display_name: display_name, email: email, password: password, profile_pic: dog_photo)
+            user = User.create(username: username, display_name: display_name, email: email, password: password)
             self.finished_login(user)
         end
     end
