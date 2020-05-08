@@ -57,7 +57,8 @@ class LoginController
             self.create_account
         else 
             p "Welcome to Twitter #{username} (Route To Home)"
-            user = User.create(username: username, display_name: display_name, email: email, password: password)
+            dog_photo = User.fetch_dog_photo
+            user = User.create(username: username, display_name: display_name, email: email, password: password, profile_pic: dog_photo)
             self.finished_login(user)
         end
     end

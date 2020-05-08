@@ -1,5 +1,6 @@
 require './lib/app_delegate.rb'
 require 'colorize'
+require 'asciiart'
 class HomeController
     attr_reader :prompt
     def initialize
@@ -13,7 +14,7 @@ class HomeController
         tweets = self.get_user_tweets
         tweets.each_with_index {|tweet, index| 
             puts "-----------------------------------------------".colorize( :color => :cyan)
-            puts "#{tweet.user.display_name} ".bold + "@#{tweet.user.username}".colorize( :color => :light_black) + " #{tweet.timestamp.strftime("%m/%d/%y %H:%M %p")}".colorize( :color => :light_black)
+            puts  AsciiArt.new(tweet.user.profile_pic).to_ascii_art(width: 5) + "#{tweet.user.display_name} ".bold + "@#{tweet.user.username}".colorize( :color => :light_black) + " #{tweet.timestamp.strftime("%m/%d/%y %H:%M %p")}".colorize( :color => :light_black)
             puts "#{tweet.message}"
             puts "-----------------------------------------------".colorize(:color => :cyan)  if index == tweets.count - 1
         }
