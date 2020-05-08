@@ -1,4 +1,5 @@
 require './lib/app_delegate.rb'
+require 'colorize'
 class LoginController
     attr_reader :prompt
     def initialize
@@ -7,6 +8,9 @@ class LoginController
     end
 
     def prompt_login_or_create_account
+        AppDelegate.instance.clear_console
+        AppDelegate.ascii_banner
+        AppDelegate.ascii_logo
         res = prompt.select("Login Or Create an Account?") do |menu|
             menu.choice 'Create Account'
             menu.choice 'Login'
@@ -20,21 +24,24 @@ class LoginController
     end
 
     def prompt_login
-        username = prompt.ask("Username: ")
-        password = prompt.mask("Password: ")
+        username = prompt.ask("Username: ", active_color: :cyan)
+        password = prompt.mask("Password: ", active_color: :cyan)
         self.auth_user(username, password)
     end
 
     def auth_user(username, password)
         user = User.find_by(username: username)
         if user == nil 
-            p "Sorry, no user exists by that username"
-            self.prompt_login
+            puts "Sorry, no user exists by that username".bold.colorize(:red)
+            sleep 3.0
+            self.prompt_login_or_create_account
         elsif user.password != password
-            p "Password Incorrect!"
-            self.prompt_login
+            puts "Password Incorrect!".bold.colorize(:red)
+            sleep 3.0
+            self.prompt_login_or_create_account
         else
-            p "Welcome back to Twitter CLI (Route to home)"
+            puts "Welcome back to Twitter CLI (Route to home)".bold.colorize(:cyan)
+            sleep 3.0
             self.finished_login(user)
         end
     end
@@ -45,20 +52,22 @@ class LoginController
     end
 
     def create_account
-        username = prompt.ask("Username: ")
-        display_name = prompt.ask("Display Name: ")
-        email = prompt.ask("Email: ")
-        password = prompt.mask("Password: ") 
+        username = prompt.ask("Username: ", active_color: :cyan)
+        display_name = prompt.ask("Display Name: ", active_color: :cyan)
+        email = prompt.ask("Email: ", active_color: :cyan)
+        password = prompt.mask("Password: ", active_color: :cyan) 
         if username_exist?(username)
-            p "Sorry, that username is already taken"
-            self.create_account
+            puts "Sorry, that username is already taken".bold.colorize(:red)
+            sleep 3.0
+            self.prompt_login_or_create_account
         elsif email_exist?(email)
-            p "Sorry, an account has already been created with that email"
-            self.create_account
+            puts "Sorry, an account has already been created with that email".bold.colorize(:red)
+            sleep 3.0
+            self.prompt_login_or_create_account
         else 
-            p "Welcome to Twitter #{username} (Route To Home)"
-            dog_photo = User.fetch_dog_photo
-            user = User.create(username: username, display_name: display_name, email: email, password: password, profile_pic: dog_photo)
+            puts "Welcome to Twitter #{username} (Route To Home)".bold.colorize(:cyan)
+            sleep 3.0
+            user = User.create(username: username, display_name: display_name, email: email, password: password)
             self.finished_login(user)
         end
     end
